@@ -2,6 +2,7 @@
 #include <libTimer.h>
 #include "lcdutils.h"
 #include "lcddraw.h"
+#include "stateMachines.h"
 
 // WARNING: LCD DISPLAY USES P1.0.  Do not touch!!!
 #define LED BIT6   /* note that bit zero req'd for display */
@@ -19,7 +20,7 @@ void main()
   enableWDTInterrupts();      /**< enable periodic interrupt */
   or_sr(0x8);              /**< GIE (enable interrupts) */
 
-  clearScreen(COLOR_BLUE);
+  clearScreen();
 
   while (1) {                 /* forever */
     if (redrawScreen) {

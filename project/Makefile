@@ -2,22 +2,22 @@
 COMMON_OBJECTS  =
 CPU             = msp430g2553
 CFLAGS          = -mmcu=${CPU} -I../h -L/opt/ti/msp430_gcc/include
-
+LDFLAGS		= -L../lib -L/opt/ti/msp430_gcc/include/ 
 
 #switch the compiler (for the internal make rules)
 CC              = msp430-elf-gcc
-AS              = msp430-elf-as
+AS              = msp430-elf-gcc -mmcu=${CPU} -c
 
 
-all: musicMachine.elf
+all: game.elf
 
 
 #additional rules for files
-musicMachine.elf: ${COMMON_OBJECTS} buzzer.o led.o main.o wdInterruptHandler.o stateMachines.o switches.o p2_interrupt_handler.o ../lib/libTimer.a
-	${CC} ${CFLAGS} -o $@ $^
+game.elf: ${COMMON_OBJECTS} buzzer.o main.o wdInterruptHandler.o stateMachines.o switches.o p2_interrupt_handler.o
+	${CC} ${CFLAGS} -o $@ $^ -lTimer -lLcd
 
 
-load: musicMachine.elf
+load: game.elf
 	msp430loader.sh  $^
 
 clean: $^

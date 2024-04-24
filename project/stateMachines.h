@@ -15,9 +15,10 @@ enum State{
 extern enum State current_state;
 extern int sec_count;
 extern int sec_flag;
+extern short redrawScreen;
 
 void main_menu_state();
-void update_250th();
+void update_timer();
 void sec();
 
 #endif // included
