@@ -1,7 +1,7 @@
 # makfile configuration
 COMMON_OBJECTS  =
 CPU             = msp430g2553
-CFLAGS          = -mmcu=${CPU} -I../h -L/opt/ti/msp430_gcc/include
+CFLAGS          = -mmcu=${CPU} -Os -I../h
 LDFLAGS		= -L../lib -L/opt/ti/msp430_gcc/include/ 
 
 #switch the compiler (for the internal make rules)
@@ -13,8 +13,8 @@ all: game.elf
 
 
 #additional rules for files
-game.elf: ${COMMON_OBJECTS} buzzer.o main.o wdInterruptHandler.o stateMachines.o switches.o p2_interrupt_handler.o
-	${CC} ${CFLAGS} -o $@ $^ -lTimer -lLcd
+game.elf: ${COMMON_OBJECTS} buzzer.o main.o wdt_c_handler.o stateMachines.o switches.o p2_interrupt_handler.o wdt_handler.o
+	${CC} ${CFLAGS} ${LDFLAGS} -o $@ $^ -lTimer -lLcd
 
 
 load: game.elf
@@ -22,11 +22,3 @@ load: game.elf
 
 clean: $^
 	rm -f *.o *.elf *~
-
-
-buzzer.o: buzzer.h
-main.o: buzzer.h led.h 
-led.o: led.c led.h
-stateMachines.o: stateMachines.c stateMachines.h led.h
-wdInterruptHandler.o: stateMachines.h
-switches.o: switches.c stateMachines.h
