@@ -6,7 +6,7 @@
 #include "lcddraw.h"
 
 
-enum State current_state = MENU;
+enum State current_state = INTRO;
 int update_sec = 0;
 int sec_flag = 0;
 short columnCenter = screenWidth >> 1;
@@ -31,13 +31,28 @@ void sec()
 }
 
 int i = 45;
+
+/* Game title and back ground*/
+void intro_state()
+{
+  clearScreen(COLOR_BLACK);
+  drawString11x16(columnCenter-24, rowCenter-50, "PONG", COLOR_WHITE, COLOR_BLACK);
+  current_state = MENU;
+}
+
 /* Game menu state*/
 void main_menu_state()
 {
   if(sec_flag) {
-    drawString5x7(columnCenter-i, rowCenter, "PRESS ANY BUTTON", COLOR_BLACK, COLOR_BLACK);
+    drawString5x7(columnCenter-i, rowCenter+30, "PRESS ANY BUTTON", COLOR_BLACK, COLOR_BLACK);
   }
   else{
-    drawString5x7(columnCenter-i, rowCenter, "PRESS ANY BUTTON", COLOR_WHITE, COLOR_BLACK);
+    drawString5x7(columnCenter-i, rowCenter+30, "PRESS ANY BUTTON", COLOR_WHITE, COLOR_BLACK);
   }
+}
+
+/* Explains the controls for the game */
+void controls_state()
+{
+  
 }

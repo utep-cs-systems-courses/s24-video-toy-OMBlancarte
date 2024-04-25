@@ -3,11 +3,8 @@
 
 // supported states
 enum State{
-  MENU = 0,
-  SIREN = 1,
-  SONG1 = 2,
-  SONG2 = 3,
-  SONG3 = 4
+  INTRO = 0,
+  MENU = 1,
 };
 
 
@@ -18,6 +15,7 @@ extern int sec_flag;
 extern short redrawScreen;
 extern short background_color;
 
+void intro_state();
 void main_menu_state();
 void update_timer();
 void sec();

@@ -8,6 +8,9 @@ void wdt_c_handler()
 {
   update_timer();
   switch (current_state) {
+    case INTRO:
+      intro_state();
+      break;
     case MENU:               
       main_menu_state();
       break;

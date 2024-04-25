@@ -22,8 +22,6 @@ void main()
   enableWDTInterrupts();      /**< enable periodic interrupt */
   or_sr(0x8);              /**< GIE (enable interrupts) */
 
-  clearScreen(COLOR_BLACK);
-
   while (1) {                 /* forever */
     if (redrawScreen) {
       redrawScreen = 0;
