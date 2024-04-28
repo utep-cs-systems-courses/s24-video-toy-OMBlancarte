@@ -32,8 +32,8 @@ void switch_interrupt_handler()
   char button3 = (p2val & SW3) ? 0 : 1;
   char button4 = (p2val & SW4) ? 0 : 1;
   
-  if(button1){
-    //current_state = SIREN;
+  if(current_state == MENU && button1){
+    current_state = CONTROLS;
   }
   else if(button2){
     // current_state = SONG3;

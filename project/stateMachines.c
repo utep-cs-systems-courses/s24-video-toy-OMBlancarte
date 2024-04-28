@@ -1,10 +1,9 @@
-
 #include <msp430.h>
 #include "stateMachines.h"
 #include "buzzer.h"
 #include "lcdutils.h"
 #include "lcddraw.h"
-
+#include "switches.h"
 
 enum State current_state = INTRO;
 int update_sec = 0;
@@ -54,5 +53,6 @@ void main_menu_state()
 /* Explains the controls for the game */
 void controls_state()
 {
-  
+  clearScreen(COLOR_GREEN);
+  drawString11x16(columnCenter, rowCenter, "PONG", COLOR_WHITE, COLOR_BLACK);
 }

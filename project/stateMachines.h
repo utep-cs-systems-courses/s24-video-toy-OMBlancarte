@@ -5,6 +5,7 @@
 enum State{
   INTRO = 0,
   MENU = 1,
+  CONTROLS = 2
 };
 
 
@@ -17,6 +18,7 @@ extern short background_color;
 
 void intro_state();
 void main_menu_state();
+void controls_state();
 void update_timer();
 void sec();
 

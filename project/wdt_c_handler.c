@@ -7,6 +7,7 @@
 void wdt_c_handler()
 {
   update_timer();
+  
   switch (current_state) {
     case INTRO:
       intro_state();
@@ -14,5 +15,9 @@ void wdt_c_handler()
     case MENU:               
       main_menu_state();
       break;
+    case CONTROLS:
+      controls_state();
+      break;
   } 
+  
 }
