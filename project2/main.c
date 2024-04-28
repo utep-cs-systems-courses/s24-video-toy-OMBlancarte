@@ -18,9 +18,10 @@ void update_state();
 void update_shape();
 
 enum State{
-  START = 0,
-  HOURGLASS = 1,
-  SQUARE = 2
+  HOURGLASS = 0,
+  SQUARE = 1,
+  TRIANGLE = 2,
+  CROSS = 3
 };
 enum State current_state = HOURGLASS;
 
@@ -167,6 +168,14 @@ screen_update_hourglass()
       else if(current_state == SQUARE){
 	fillRectangle(col-lastStep, row-lastStep, width, width, color);
       }
+      else if(current_state == TRIANGLE){
+	fillRectangle(startCol, endCol, width, 1, color);
+      }
+      else if(current_state == CROSS){
+	fillRectangle(startCol, row, 1, width, color);
+	fillRectangle(endCol, row, 1, width, color);
+	fillRectangle(startCol, row-lastStep, width, 1, color);
+      }
     }
   }
 }  
@@ -174,13 +183,16 @@ screen_update_hourglass()
 
 void update_state(){
   switch (current_state){
-    case START:
-      current_state = HOURGLASS;
-      break;
     case HOURGLASS:
       current_state = SQUARE;
       break;
     case SQUARE:
+      current_state = TRIANGLE;
+      break;
+    case TRIANGLE:
+      current_state = CROSS;
+      break;
+    case CROSS:
       current_state = HOURGLASS;
       break;
   }
@@ -190,15 +202,7 @@ void
 update_shape()
 {
   screen_update_ball();
-  //update_state();
-  //switch(current_state){
-  //case HOURGLASS:
-      screen_update_hourglass();
-      //  break; 
-      //case SQUARE:
-      //screen_update_square();
-      //break;
-      //}
+  screen_update_hourglass();
 }
    
 
