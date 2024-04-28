@@ -2,6 +2,7 @@
 #include <libTimer.h>
 #include "lcdutils.h"
 #include "lcddraw.h"
+#include "buzzer.h"
 
 // WARNING: LCD DISPLAY USES P1.0.  Do not touch!!! 
 
@@ -127,7 +128,7 @@ void main()
   configureClocks();
   lcd_init();
   switch_init();
-  
+  buzzer_init();
   enableWDTInterrupts();      /**< enable periodic interrupt */
   or_sr(0x8);	              /**< GIE (enable interrupts) */
   
@@ -152,12 +153,13 @@ screen_update_hourglass()
     clearScreen(COLOR_BLACK);
     lastStep = 0;
     update_state();
+    buzzer_set_period(0);
   } else {
     for (; lastStep <= step; lastStep++) {
       int startCol = col - lastStep;
       int endCol = col + lastStep;
       int width = 1 + endCol - startCol;
-      
+      int soundStep = 300 + (2 * lastStep);
       // a color in this BGR encoding is BBBB BGGG GGGR RRRR
       unsigned int color = (blue << 11) | (green << 5) | red;
 
@@ -175,6 +177,9 @@ screen_update_hourglass()
 	fillRectangle(startCol, row, 1, width, color);
 	fillRectangle(endCol, row, 1, width, color);
 	fillRectangle(startCol, row-lastStep, width, 1, color);
+      }
+      if((lastStep % 5) == 0){
+	//buzzer_set_period(soundStep);
       }
     }
   }
