@@ -62,7 +62,9 @@ switch_interrupt_handler()
 // axis zero for col, axis 1 for row
 
 short drawPos[2] = {1,10}, controlPos[2] = {2, 10};
+short drawPos2[2] = {screenWidth-2,17}, controlPos2[2] = {screenWidth - 3, 17};
 short colVelocity = 4, colLimits[2] = {1, screenWidth};
+short colVelocity2 = -4;
 
 void
 draw_ball(int col, int row, unsigned short color)
@@ -80,9 +82,13 @@ screen_update_ball()
   return;			/* nothing to do */
  redraw:
   draw_ball(drawPos[0], drawPos[1], COLOR_BLACK); /* erase */
-  for (char axis = 0; axis < 2; axis ++) 
+  draw_ball(drawPos2[0], drawPos2[1], COLOR_BLACK);
+  for (char axis = 0; axis < 2; axis ++) {
     drawPos[axis] = controlPos[axis];
+    drawPos2[axis] = controlPos2[axis]; // Ball 2
+  }
   draw_ball(drawPos[0], drawPos[1], COLOR_WHITE); /* draw */
+  draw_ball(drawPos2[0], drawPos2[1], COLOR_RED); // draw ball 2
 }
   
 
@@ -99,10 +105,15 @@ void wdt_c_handler()
     {				/* move ball */
       short oldCol = controlPos[0];
       short newCol = oldCol + colVelocity;
-      if (newCol <= colLimits[0] || newCol >= colLimits[1])
+      short newCol2 = controlPos2[0] + colVelocity2;
+      if (newCol <= colLimits[0] || newCol >= colLimits[1]){
 	colVelocity = -colVelocity;
-      else
+	colVelocity2 = -colVelocity2;
+      }
+      else{
 	controlPos[0] = newCol;
+	controlPos2[0] = newCol2;
+      }
     }
 
     {				/* update hourglass */
