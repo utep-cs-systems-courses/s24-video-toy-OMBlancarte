@@ -15,16 +15,26 @@
 
 #define SWITCHES 15
 
-void update_state();
+const int HOURGLASS = 0;
+const int SQUARE = 1;
+const int TRIANGLE = 2;
+const int CROSS =3;
+
+//extern void update_state();
 void update_shape();
 
+/*
 enum State{
   HOURGLASS = 0,
   SQUARE = 1,
   TRIANGLE = 2,
   CROSS = 3
 };
-enum State current_state = HOURGLASS;
+*/
+
+int current_state = HOURGLASS;
+
+extern void update_state();
 
 char blue = 31, green = 0, red = 31;
 unsigned char step = 0;
@@ -170,7 +180,7 @@ screen_update_hourglass()
       int startCol = col - lastStep;
       int endCol = col + lastStep;
       int width = 1 + endCol - startCol;
-      int soundStep = 300 + (2 * lastStep);
+      int soundStep = 200 + (2 * lastStep);
       // a color in this BGR encoding is BBBB BGGG GGGR RRRR
       unsigned int color = (blue << 11) | (green << 5) | red;
 
@@ -190,13 +200,13 @@ screen_update_hourglass()
 	fillRectangle(startCol, row-lastStep, width, 1, color);
       }
       if((lastStep % 5) == 0){
-	//buzzer_set_period(soundStep);
+	buzzer_set_period(soundStep);
       }
     }
   }
 }  
 
-
+/*
 void update_state(){
   switch (current_state){
     case HOURGLASS:
@@ -213,7 +223,7 @@ void update_state(){
       break;
   }
 }
-
+*/
 void
 update_shape()
 {
